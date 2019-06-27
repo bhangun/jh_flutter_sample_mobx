@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../stores/authentication/authentication_store.dart';
-import '../stores/user/user_store.dart';
+import 'package:jh_flutter_mobx/stores/app/app_store.dart';
+import 'package:jh_flutter_mobx/widgets/rounded_button_widget.dart';
+import '../modules/account/stores/authentication/authentication_store.dart';
+import '../modules/account/stores/user/user_store.dart';
 import '../widgets/appbar_widget.dart';
 import '../widgets/drawer_widget.dart';
 import '../widgets/global_methods.dart';
@@ -13,10 +15,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _homeKey = GlobalKey<ScaffoldState>();
   //store
   final AuthenticationStore __authStore = AuthenticationStore();
   final UserStore _userStore = UserStore();
   //final _homeStore = HomeStore();
+  final _appStore = AppStore();
+
+
 
   @override
   void initState() {
@@ -29,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _homeKey,
       appBar: buildAppBar(context,'Home'),
       body: _buildBody(),
       drawer:  Observer(
@@ -44,10 +51,29 @@ class _HomeScreenState extends State<HomeScreen> {
     return Stack(
       children: <Widget>[
         Observer(
+          name: 'body',
           builder: (context) {
             return __authStore.loggedIn
                 ? CustomProgressIndicatorWidget()
-                : Material(child: Text('test'));
+                : Material(child: SafeArea(
+                child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
+                children: <Widget>[
+                  RoundedButtonWidget(
+                buttonText: 'Light',
+                buttonColor:  Theme.of(context).buttonColor,
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: () => _appStore.switchToLight()
+              ),
+              RoundedButtonWidget(
+                buttonText: 'Dark',
+                buttonColor:  Theme.of(context).buttonColor,
+                textColor: Theme.of(context).textTheme.button.color,   
+                onPressed: ()=>_appStore.switchToDark()
+              ),
+                ]
+                )
+                 ));
           },
         ),
         Observer(

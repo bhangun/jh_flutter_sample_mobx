@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../view/account/user.detail.dart';
-import '../view/account/user.form.dart';
-import '../view/account/user.list.dart';
-import '../view/home.dart';
-import '../view/login.dart';
-import '../view/splash.dart';
+import '../modules/account/views/user.detail.dart';
+import '../modules/account/views/user.form.dart';
+import '../modules/account/views/user.list.dart';
+import '../views/home.dart';
+import '../views/login.dart';
+import '../views/splash.dart';
 
 // kutilang-needle-add-import-route - Don't remove, used by kutilang to add new import
 

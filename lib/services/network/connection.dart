@@ -13,8 +13,6 @@ restGet(String path, [bool auth = false, bool isBasePath = false]) async {
     HttpHeaders.contentTypeHeader: "application/json",
     "Authorization": "Bearer  ${(auth) ? await prefs('token') : ""}"
   });
-
-   print(path + '>>> '+response.body );
   if (response.statusCode == 200)
     // If the call to the server was successful, parse the JSON
     return response.body;
@@ -32,7 +30,7 @@ restPost(String path, String payload, [bool auth = false]) async {
       },
       body: payload,
       encoding: Encoding.getByName('UTF8'));
-  if (response.statusCode == 200)
+  if (response.statusCode == 200 || response.statusCode == 201)
     return response.body;
   else
     throw Exception('Failed to load post');
@@ -40,16 +38,15 @@ restPost(String path, String payload, [bool auth = false]) async {
 
 //
 restPut(String path, String payload, [bool auth = false]) async {
-  print("--put 1--");
   final response = await http.put(API + path,
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
-        "Authorization": "Bearer  ${(auth) ? await prefs("token") : ""}"
+        "Authorization": "Bearer  ${await prefs("token")}"
       },
       body: payload,
       encoding: Encoding.getByName('UTF8'));
-  print("--put 2--");
-  if (response.statusCode == 200)
+  
+  if (response.statusCode == 200 || response.statusCode == 201)
     return response.body;
   else
     throw Exception('Failed to put');
@@ -57,16 +54,21 @@ restPut(String path, String payload, [bool auth = false]) async {
 
 //
 restDelete(String path) async {
-  final response = await http.delete(API + path, headers: _header());
+  final response = await http.delete(API + path, headers: {
+        HttpHeaders.contentTypeHeader: "application/json",
+        "Authorization": "Bearer  ${await prefs("token")}"
+      });
   if (response.statusCode == 200)
     return response.body;
   else
     throw Exception('Failed to delete');
 }
 
+/* 
 Map<String, String> _header() {
   return {
     HttpHeaders.contentTypeHeader: "application/json",
     "Authorization": "Bearer ${prefs("token")}"
   };
 }
+ */

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:jh_flutter_mobx/widgets/alert_widget.dart';
 import 'package:jh_flutter_mobx/widgets/appbar_widget.dart';
-import '../../stores/user/user_store.dart';
-import '../../widgets/global_methods.dart';
-import '../../widgets/progress_indicator_widget.dart';
+import '../stores/user/user_store.dart';
+import '../../../widgets/global_methods.dart';
+import '../../../widgets/progress_indicator_widget.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class UserList extends StatefulWidget {
@@ -15,7 +16,7 @@ class UserList extends StatefulWidget {
 }
 
 class _UserListState extends State<UserList> {
-
+  final _listKey = GlobalKey<ScaffoldState>();
   final _userStore = UserStore();
 
   @override
@@ -28,6 +29,7 @@ class _UserListState extends State<UserList> {
   Widget build(BuildContext context) {
     return 
      Scaffold(
+       key: _listKey,
           // cannot be used using this form $_userStore.totalUser
           appBar: buildAppBar(context, 'User List ( ${_userStore.totalUser} )'),
           body: _buildBody(),
@@ -43,6 +45,7 @@ class _UserListState extends State<UserList> {
     return Stack(
       children: <Widget>[
         Observer(
+          name: 'list',
           builder: (context) {
             return _userStore.loading
                 ? CustomProgressIndicatorWidget()
@@ -58,23 +61,9 @@ class _UserListState extends State<UserList> {
           },
         ),
         Observer(
-          name: 'error',
+          name: 'dialog',
           builder: (context) {
-            return _userStore.isModified?
-                AlertDialog(
-                        title: Text('Delete'),
-                        content: Text('Item will be deleted'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Cancel'),
-                            onPressed: () => Navigator.of(context).pop(false),
-                          ),
-                          FlatButton(
-                            child: Text('Ok'),
-                            onPressed: () => Navigator.of(context).pop(true),
-                          ),
-                        ],
-                      ):Container();
+            return _userStore.isModified ? KutAlert():Container();
         }),
       ],
     );
@@ -113,7 +102,7 @@ class _UserListState extends State<UserList> {
                       caption: 'Delete',
                       color: Colors.red,
                       icon: Icons.delete,
-                      onTap: _userStore.delete(_userStore.userList[index].id),
+                      onTap: ()=> _userStore.delete(_userStore.userList[index].login),
                     ),
                   ],
                   dismissal: SlidableDismissal(
@@ -122,7 +111,7 @@ class _UserListState extends State<UserList> {
                   child: ListTile(
                 leading: Icon(Icons.person),
                 title: Text(
-                  '${_userStore.userList[index].firstName}',
+                  '${_userStore.userList[index].login}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
@@ -165,16 +154,7 @@ class _UserListState extends State<UserList> {
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                 ),
-                 onTap: (){_userStore.itemTapU(position);}
-                 //onTap://_userStore.userList[position])// () {
-                  /*     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => UserDetail(
-                                    id: id,
-                                    username: name,
-                                  ))); */
-                    //}
+                 onTap: ()=>_userStore.itemTapU(position)
               );
             },
           )

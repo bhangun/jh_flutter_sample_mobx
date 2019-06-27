@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'material_theme_colors.dart';
 
+class LightTheme {
 
+//final ThemeData lightTheme = _buildTheme();
 
-final ThemeData lightTheme = _buildTheme();
-
-ThemeData _buildTheme() {
+static ThemeData buildTheme() {
+  print('terang');
   final ThemeData base = ThemeData.light();
   return base.copyWith(
     accentColor: MatThemeColors.blue[800],
@@ -28,7 +29,7 @@ ThemeData _buildTheme() {
   );
 }
 
-TextTheme _buildTextTheme(TextTheme base) {
+static TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
     headline: base.headline.copyWith(
       fontWeight: FontWeight.w500,
@@ -49,4 +50,6 @@ TextTheme _buildTextTheme(TextTheme base) {
     displayColor: MatThemeColors.blue,
     bodyColor: MatThemeColors.black,
   );
+}
+
 }

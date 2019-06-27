@@ -1,6 +1,6 @@
 
 import 'dart:convert';
-import 'car.dart';
+import 'car/car_model.dart';
 
 class Wheel {
     final int id;

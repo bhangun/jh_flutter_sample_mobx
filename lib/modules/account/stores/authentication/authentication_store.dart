@@ -1,17 +1,17 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import '../../services/config.dart';
-import '../../services/helper.dart';
-import '../../services/locator.dart';
-import '../../services/navigation.dart';
-import '../../services/network/connection.dart';
-import '../../services/routes.dart';
-import '../../services/sharedpref/constants/preferences.dart';
-import '../../stores/error/error_store.dart';
-import '../../stores/user/user_store.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../services/config.dart';
+import '../../../../services/helper.dart';
+import '../../../../services/locator.dart';
+import '../../../../services/navigation.dart';
+import '../../../../services/network/connection.dart';
+import '../../../../services/routes.dart';
+import '../../../../services/sharedpref/constants/preferences.dart';
+import '../../../../stores/error/error_store.dart';
+import '../user/user_store.dart';
 
 part 'authentication_store.g.dart';
 

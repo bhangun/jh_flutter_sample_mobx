@@ -73,6 +73,21 @@ mixin _$UserStore on _UserStore, Store {
     _$userProfileAtom.reportChanged();
   }
 
+  final _$personAtom = Atom(name: '_UserStore.person');
+
+  @override
+  User get person {
+    _$personAtom.reportObserved();
+    return super.person;
+  }
+
+  @override
+  set person(User value) {
+    _$personAtom.context.checkIfStateModificationsAreAllowed(_$personAtom);
+    super.person = value;
+    _$personAtom.reportChanged();
+  }
+
   final _$isModifiedAtom = Atom(name: '_UserStore.isModified');
 
   @override
@@ -226,36 +241,35 @@ mixin _$UserStore on _UserStore, Store {
     _$emailAtom.reportChanged();
   }
 
-  final _$dialogTitleAtom = Atom(name: '_UserStore.dialogTitle');
+  final _$activatedAtom = Atom(name: '_UserStore.activated');
 
   @override
-  String get dialogTitle {
-    _$dialogTitleAtom.reportObserved();
-    return super.dialogTitle;
+  String get activated {
+    _$activatedAtom.reportObserved();
+    return super.activated;
   }
 
   @override
-  set dialogTitle(String value) {
-    _$dialogTitleAtom.context
-        .checkIfStateModificationsAreAllowed(_$dialogTitleAtom);
-    super.dialogTitle = value;
-    _$dialogTitleAtom.reportChanged();
+  set activated(String value) {
+    _$activatedAtom.context
+        .checkIfStateModificationsAreAllowed(_$activatedAtom);
+    super.activated = value;
+    _$activatedAtom.reportChanged();
   }
 
-  final _$dialogContentAtom = Atom(name: '_UserStore.dialogContent');
+  final _$profileAtom = Atom(name: '_UserStore.profile');
 
   @override
-  String get dialogContent {
-    _$dialogContentAtom.reportObserved();
-    return super.dialogContent;
+  String get profile {
+    _$profileAtom.reportObserved();
+    return super.profile;
   }
 
   @override
-  set dialogContent(String value) {
-    _$dialogContentAtom.context
-        .checkIfStateModificationsAreAllowed(_$dialogContentAtom);
-    super.dialogContent = value;
-    _$dialogContentAtom.reportChanged();
+  set profile(String value) {
+    _$profileAtom.context.checkIfStateModificationsAreAllowed(_$profileAtom);
+    super.profile = value;
+    _$profileAtom.reportChanged();
   }
 
   final _$getUserListAsyncAction = AsyncAction('getUserList');
@@ -325,6 +339,26 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   @override
+  void setActivated(String value) {
+    final _$actionInfo = _$_UserStoreActionController.startAction();
+    try {
+      return super.setActivated(value);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setProfile(String value) {
+    final _$actionInfo = _$_UserStoreActionController.startAction();
+    try {
+      return super.setProfile(value);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void count(List<User> list) {
     final _$actionInfo = _$_UserStoreActionController.startAction();
     try {
@@ -375,10 +409,20 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   @override
-  dynamic delete(int id) {
+  dynamic save() {
     final _$actionInfo = _$_UserStoreActionController.startAction();
     try {
-      return super.delete(id);
+      return super.save();
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic delete(String userid) {
+    final _$actionInfo = _$_UserStoreActionController.startAction();
+    try {
+      return super.delete(userid);
     } finally {
       _$_UserStoreActionController.endAction(_$actionInfo);
     }
@@ -389,26 +433,6 @@ mixin _$UserStore on _UserStore, Store {
     final _$actionInfo = _$_UserStoreActionController.startAction();
     try {
       return super.update(id);
-    } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic onDialogOk() {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
-    try {
-      return super.onDialogOk();
-    } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic onDialogCancel() {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
-    try {
-      return super.onDialogCancel();
     } finally {
       _$_UserStoreActionController.endAction(_$actionInfo);
     }

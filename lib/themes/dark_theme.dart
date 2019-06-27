@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import '../themes/material_theme_colors.dart';
 
-final ThemeData darkTheme = _buildTheme();
 
-ThemeData _buildTheme() {
+class DarkTheme {
+
+//final ThemeData darkTheme = _buildTheme();
+
+static ThemeData buildTheme() {
+   print('gelap');
   final ThemeData base = ThemeData.dark();
   return base.copyWith(
     primaryColor:  MatThemeColors.grey,
@@ -24,7 +28,7 @@ ThemeData _buildTheme() {
   );
 }
 
-TextTheme _buildTextTheme(TextTheme base) {
+static TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
     headline: base.headline.copyWith(
       fontWeight: FontWeight.w500,
@@ -47,4 +51,4 @@ TextTheme _buildTextTheme(TextTheme base) {
   );
 }
 
-
+}

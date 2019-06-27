@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:jh_flutter_mobx/services/locator.dart';
-import 'package:jh_flutter_mobx/services/navigation.dart';
-import 'package:jh_flutter_mobx/services/routes.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
+import '../modules/account/stores/authentication/authentication_store.dart';
+import '../stores/app/app_store.dart';
 import '../constants/strings.dart';
-import '../stores/authentication/authentication_store.dart';
 import '../widgets/app_icon_widget.dart';
 import '../widgets/empty_app_bar_widget.dart';
 import '../widgets/global_methods.dart';
 import '../widgets/progress_indicator_widget.dart';
 import '../widgets/rounded_button_widget.dart';
 import '../widgets/textfield_widget.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+
 
 class LoginScreen extends StatefulWidget {
   final testKey = Key('K');
@@ -27,10 +27,12 @@ class _LoginScreenState extends State<LoginScreen> {
   FocusNode _passwordFocusNode;
 
   //form key
-  final _formKey = GlobalKey<FormState>();
+ // final _formKey = GlobalKey<FormState>();
 
   //store
   final _authStore = AuthenticationStore();
+
+  final _appStore = AppStore();
 
   @override
   void initState() {
@@ -102,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: CustomProgressIndicatorWidget(),
               );
             },
-          )
+          ),
         ],
       ),
     );
@@ -118,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildRightSide() {
     return Form(
-      key: _formKey,
+     // key: _formKey,
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -132,7 +134,19 @@ class _LoginScreenState extends State<LoginScreen> {
               _buildUserIdField(),
               _buildPasswordField(),
               _buildForgotPasswordButton(),
-              _buildSignInButton()
+              RoundedButtonWidget(
+                buttonText: 'Light',
+                buttonColor:  Theme.of(context).buttonColor,
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: ()=>_appStore.switchToLight()
+              ),
+              RoundedButtonWidget(
+                buttonText: 'Dark',
+                buttonColor:  Theme.of(context).buttonColor,
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: ()=>_appStore.switchToDark()
+              ),
+              _buildSignInButton(),
             ],
           ),
         ),
@@ -142,6 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildUserIdField() {
     return Observer(
+      name: 'username',
       builder: (context) {
         return TextFieldWidget(
           key: Key('user_id'),
@@ -162,6 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildPasswordField() {
     return Observer(
+      name: 'password',
       builder: (context) {
         return TextFieldWidget(
           key: Key('user_password'),
@@ -204,6 +220,8 @@ class _LoginScreenState extends State<LoginScreen> {
       textColor: Theme.of(context).textTheme.button.color,
       onPressed: () {
         if (_authStore.canLogin) {
+          print('login  ${_appStore.isLightTheme}');
+          _appStore.switchToDark();
           _authStore.login(_userEmailController.text,_passwordController.text);
         } else {
           showErrorMessage(context , 'Please fill in all fields');

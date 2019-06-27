@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import '../models/user.dart';
+import '../../../services/config.dart';
+import '../../../services/helper.dart';
 
-import 'network/connection.dart';
+import '../models/user_model.dart';
+import '../../../services/network/connection.dart';
 
 
 const API_ACCOUNT = 'account';
@@ -74,14 +76,42 @@ updateUser(User user) async {
 
 
 //
-deleteUser(User user) async {
-  return await restDelete(API_USER + user.toJson().toString());
+deleteUser(String userid) async {
+  return await restDelete(API_USER + userid);
 }
 
 List<User> usersData(String data) {
   final parsed =json.decode(data).cast<Map<String, dynamic>>();
   List<User> lu= parsed.map<User>((json) => User.fromJson(json)).toList();
   return lu;
+}
+
+
+Future<bool> login(String username, String password, bool rememberMe) async {
+  logout();
+  var body = jsonEncode(
+      {"username": username, "password": password, "rememberMe": rememberMe});
+  try {
+    final response = await restPost("authenticate", body);
+    setPrefs(TOKEN, json.decode(response)["id_token"]);
+
+    String profile = await restGet(API_ACCOUNT,true,false);
+    setPrefs(PROFILE, profile);
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+logout(){
+  setPrefs(TOKEN, "");
+  setPrefs(PROFILE, "");
+}
+
+Future<User> userProfile() async {
+ String profile = await prefs(PROFILE);
+  return User.fromJson(json.decode(profile));
 }
 
 /* 

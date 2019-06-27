@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import '../services/network/connection.dart';
-import 'car.dart';
+import '../../services/network/connection.dart';
+import 'car_model.dart';
 
 
 // GET getAllCars

@@ -14,12 +14,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'constants/strings.dart';
-import 'view/splash.dart';
+import 'stores/app/app_store.dart';
+import 'views/splash.dart';
 import 'services/locator.dart';
 import 'services/routes.dart';
-import 'themes/light_theme.dart';
 import 'services/navigation.dart';
 
 void main() {
@@ -35,17 +36,24 @@ void main() {
 }
 
 class KutilangApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final _appStore = AppStore();
+  final _appKey = GlobalKey<State>();
+ 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: Strings.appName,
-      theme: lightTheme,
-      routes: Routes.routes,
-      home: SplashScreen(),
-      navigatorKey: NavigationService.navigatorKey,
-     // onGenerateRoute: Routes.generateRoute,
+    return Observer(
+      name: 'username',
+      builder: (context) {
+        return MaterialApp(
+          key: _appKey,
+                debugShowCheckedModeBanner: false,
+                title: Strings.appName,
+                theme: _appStore.theme,
+                routes: Routes.routes,
+                home: SplashScreen(),
+                navigatorKey: NavigationService.navigatorKey,
+        );
+        }
     );
   }
 }

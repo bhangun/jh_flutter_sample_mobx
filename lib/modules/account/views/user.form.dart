@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../../stores/user/user_store.dart';
-import '../../widgets/global_methods.dart';
-import '../../widgets/progress_indicator_widget.dart';
-import '../../stores/authentication/authentication_store.dart';
-import '../../models/user.dart';
+
+import '../../../widgets/alert_widget.dart';
+import '../stores/user/user_store.dart';
+import '../../../widgets/global_methods.dart';
+import '../../../widgets/progress_indicator_widget.dart';
+import '../models/user_model.dart';
 
 
 class UserForm extends StatefulWidget {
@@ -22,7 +23,6 @@ class _UserFormState extends State<UserForm> {
   final _lastname = TextEditingController();
   final _email = TextEditingController();
 
-  final _authStore = AuthenticationStore();
   final _userStore = UserStore();
 
 @override
@@ -73,7 +73,7 @@ class _UserFormState extends State<UserForm> {
         ),
         body: _buildBody(),
         floatingActionButton: FloatingActionButton(
-          onPressed: _userStore.add,
+          onPressed: ()=> _userStore.save,
           tooltip: 'Add',
           child: Icon(Icons.save),
         ));
@@ -83,6 +83,7 @@ class _UserFormState extends State<UserForm> {
     return Stack(
       children: <Widget>[
         Observer(
+          name: 'form',
           builder: (context) {
             return _userStore.loading
                 ? CustomProgressIndicatorWidget()
@@ -100,21 +101,7 @@ class _UserFormState extends State<UserForm> {
         Observer(
           name: 'dialog',
           builder: (context) {
-            return _userStore.isModified
-                ? AlertDialog(
-                        title: Text(_userStore.dialogTitle),
-                        content: Text(_userStore.dialogContent),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Cancel'),
-                            onPressed: _userStore.onDialogCancel,
-                          ),
-                          FlatButton(
-                            child: Text('Ok'),
-                            onPressed: _userStore.onDialogOk,
-                          ),
-                        ],
-                      ):Container();
+            return _userStore.isModified ? KutAlert():Container();
           }
         ),
       ],
@@ -162,11 +149,7 @@ class _UserFormState extends State<UserForm> {
       ),
       Checkbox(
           value: _activated,
-          onChanged: (bool newValue) {
-            setState(() {
-              _activated = newValue;
-            });
-          }
+          onChanged: (bool newValue) =>_userStore.setActivated(_email.text)
       ),
       RaisedButton(
           child: Text('Profile'),

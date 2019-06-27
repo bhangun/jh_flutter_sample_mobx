@@ -1,6 +1,6 @@
 
 
-import 'owner.dart';
+import '../owner.dart';
 
 class Car {
     final int id;

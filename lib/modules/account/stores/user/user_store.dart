@@ -1,15 +1,16 @@
 
 import 'dart:convert';
-import 'package:jh_flutter_mobx/services/locator.dart';
-import 'package:jh_flutter_mobx/services/navigation.dart';
-import 'package:jh_flutter_mobx/services/routes.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../models/user.dart';
-import '../../services/helper.dart';
-import '../../services/network/connection.dart';
-import '../../services/user.helper.dart';
-import '../../stores/error/error_store.dart';
+import '../../../../services/locator.dart';
+import '../../../../services/navigation.dart';
+import '../../../../services/routes.dart';
+import '../../../../stores/alert/alert_store.dart';
+import '../../../../modules/account/models/user_model.dart';
+import '../../../../services/helper.dart';
+import '../../../../services/network/connection.dart';
+import '../../helper/account_helper.dart';
+import '../../../../stores/error/error_store.dart';
 
 part 'user_store.g.dart';
 
@@ -22,8 +23,9 @@ abstract class _UserStore implements Store {
     reaction((_) => itemDetail,setItemData);
   }
 
-  // store for handling errors
+  // other store  
   final ErrorStore errorStore = ErrorStore();
+  final AlertStore alertStore = AlertStore();
 
 
   // store variables:-----------------------------------------------------------
@@ -40,6 +42,9 @@ abstract class _UserStore implements Store {
   User userProfile;
 
   @observable
+  User person;
+
+  @observable
   bool isModified=false;
 
   @observable
@@ -54,7 +59,7 @@ abstract class _UserStore implements Store {
   @observable
   bool loading = false;
 
-@observable
+  @observable
   int id;
 
   @observable
@@ -70,11 +75,10 @@ abstract class _UserStore implements Store {
   String email;
 
   @observable
-  String dialogTitle = 'Update';
+  String activated;
 
   @observable
-  String dialogContent = 'Item has been update';
-
+  String profile;
 
   // actions:-------------------------------------------------------------------
   @action
@@ -102,6 +106,15 @@ abstract class _UserStore implements Store {
     email = value;
   }
 
+  @action
+  void setActivated(String value) {
+    activated = value;
+  }
+
+  @action
+  void setProfile(String value) {
+    profile = value;
+  }
 
   @action
   void count(List<User> list){
@@ -147,23 +160,25 @@ abstract class _UserStore implements Store {
   }
 
   @action
-  delete(int id){
+  save(){
+    isModified =false;
+    createUser(mapping());
+    //dialogDelete();
+    locator<NavigationService>().navigateTo(Routes.userForm);
+  }
 
+  @action
+  delete(String userid){
+    print('delete---$id');
+    dialogDelete();
+    //isModified =true;
+    deleteUser(userid);
+    getUserList();
   }
 
   @action
   update(int id){
-
-  }
-
-  @action
-  onDialogOk(){
-
-  }
-
-  @action
-  onDialogCancel(){
-
+    dialogDelete();
   }
 
   @action
@@ -180,9 +195,21 @@ abstract class _UserStore implements Store {
       userProfile = User.fromJson(json.decode(profile));
   }
 
-  maping(){
+
+  dialogDelete([String item]){
+    alertStore.setTitleDialog('Delete');
+    alertStore.setContentDialog('This item $item would be delete');
+    print('----');
+  }
+
+   dialogUpdate([String item]){
+    alertStore.setTitleDialog('Update');
+    alertStore.setContentDialog('This item $item would be update');
+  }
+
+  mapping(){
     return User(
-              id: id,
+              //id: id,
               login: username,
               firstName: firstname,
               lastName: lastname,

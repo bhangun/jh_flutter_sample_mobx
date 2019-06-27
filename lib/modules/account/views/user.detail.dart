@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jh_flutter_mobx/widgets/appbar_widget.dart';
-import '../../stores/user/user_store.dart';
+import '../stores/user/user_store.dart';
 
 class UserDetail extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _UserDetailState extends State<UserDetail> {
     return Scaffold(
         appBar: buildAppBar(context, 'User Detail '),//${_userStore.itemDetail.firstName}'),
         body:  Observer(
-          name: 'error',
+          name: 'userdetail',
           builder: (context) {
             return _userStore.isItemEmpty?
             Center(child: Text('User data are empty >> ${_userStore.userList}')):

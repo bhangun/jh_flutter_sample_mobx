@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import '../lib/services/network/connection.dart';
-import '../lib/services/user.helper.dart';
-import '../lib/services/common.dart';
+import '../lib/modules/account/helper/account_helper.dart';
 
 void main() {
   group('Authentication', () {
