@@ -8,7 +8,7 @@ part of 'app_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars
 
-mixin _$AppStore on _AppStore, Store {
+mixin _$AppStore on _AppBloc, Store {
   Computed<ThemeData> _$themeComputed;
 
   @override
@@ -20,7 +20,7 @@ mixin _$AppStore on _AppStore, Store {
   bool get wtheme =>
       (_$wthemeComputed ??= Computed<bool>(() => super.wtheme)).value;
 
-  final _$isLightThemeAtom = Atom(name: '_AppStore.isLightTheme');
+  final _$isLightThemeAtom = Atom(name: '_AppBloc.isLightTheme');
 
   @override
   bool get isLightTheme {
@@ -36,35 +36,35 @@ mixin _$AppStore on _AppStore, Store {
     _$isLightThemeAtom.reportChanged();
   }
 
-  final _$_AppStoreActionController = ActionController(name: '_AppStore');
+  final _$_AppBlocActionController = ActionController(name: '_AppBloc');
 
   @override
   void count(bool b) {
-    final _$actionInfo = _$_AppStoreActionController.startAction();
+    final _$actionInfo = _$_AppBlocActionController.startAction();
     try {
       return super.count(b);
     } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
+      _$_AppBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic switchToDark() {
-    final _$actionInfo = _$_AppStoreActionController.startAction();
+    final _$actionInfo = _$_AppBlocActionController.startAction();
     try {
       return super.switchToDark();
     } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
+      _$_AppBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic switchToLight() {
-    final _$actionInfo = _$_AppStoreActionController.startAction();
+    final _$actionInfo = _$_AppBlocActionController.startAction();
     try {
       return super.switchToLight();
     } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
+      _$_AppBlocActionController.endAction(_$actionInfo);
     }
   }
 }

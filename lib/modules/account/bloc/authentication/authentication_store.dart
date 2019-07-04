@@ -9,9 +9,9 @@ import '../../../../services/locator.dart';
 import '../../../../services/navigation.dart';
 import '../../../../services/network/connection.dart';
 import '../../../../services/routes.dart';
-import '../../../../services/sharedpref/constants/preferences.dart';
-import '../../../../stores/error/error_store.dart';
-import '../user/user_store.dart';
+import '../../../../services/sharedpref/preferences.dart';
+import '../../../../bloc/error/index.dart';
+import '../user/index.dart';
 
 part 'authentication_store.g.dart';
 
@@ -104,13 +104,31 @@ abstract class _AuthenticationStore implements Store {
 
   @action
   void validateUserEmail(String value) {
+    // Regex for email validation
+    String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+      "\\@" +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+      "(" +
+      "\\." +
+      "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+      ")+";
+    
+    RegExp regExp = new RegExp(p);
+
     if (value.isEmpty) {
       userEmail = "Email can't be empty";
-    } /* else if (!isEmail(value)) {
+    } else if (regExp.hasMatch(value)) {
+      userEmail = null;
+    }
+    /* else if (!isEmail(value)) {
       userEmail = 'Please enter a valid email address';
     } */ else {
       userEmail = null;
     }
+    
+    errorStore.showError = true;
+    errorStore.errorMessage = 'Email provided isn\'t valid.Try another email address';
+    
   }
 
   @action

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/diagnostics.dart';
 import '../services/routes.dart';
-import '../services/sharedpref/constants/preferences.dart';
+import '../services/sharedpref/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

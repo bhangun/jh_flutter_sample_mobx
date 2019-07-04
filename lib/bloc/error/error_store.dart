@@ -2,9 +2,9 @@ import 'package:mobx/mobx.dart';
 
 part 'error_store.g.dart';
 
-class ErrorStore = _ErrorStore with _$ErrorStore;
+class ErrorStore = _ErrorBloc with _$ErrorStore;
 
-abstract class _ErrorStore implements Store {
+abstract class _ErrorBloc implements Store {
 
   // store variables:-----------------------------------------------------------
   @observable

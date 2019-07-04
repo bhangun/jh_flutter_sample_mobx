@@ -8,8 +8,8 @@ part of 'error_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars
 
-mixin _$ErrorStore on _ErrorStore, Store {
-  final _$errorMessageAtom = Atom(name: '_ErrorStore.errorMessage');
+mixin _$ErrorStore on _ErrorBloc, Store {
+  final _$errorMessageAtom = Atom(name: '_ErrorBloc.errorMessage');
 
   @override
   String get errorMessage {
@@ -25,7 +25,7 @@ mixin _$ErrorStore on _ErrorStore, Store {
     _$errorMessageAtom.reportChanged();
   }
 
-  final _$showErrorAtom = Atom(name: '_ErrorStore.showError');
+  final _$showErrorAtom = Atom(name: '_ErrorBloc.showError');
 
   @override
   bool get showError {

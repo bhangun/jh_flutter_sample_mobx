@@ -8,8 +8,8 @@ part of 'user_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars
 
-mixin _$UserStore on _UserStore, Store {
-  final _$itemDetailAtom = Atom(name: '_UserStore.itemDetail');
+mixin _$UserStore on _UserBloc, Store {
+  final _$itemDetailAtom = Atom(name: '_UserBloc.itemDetail');
 
   @override
   User get itemDetail {
@@ -25,7 +25,7 @@ mixin _$UserStore on _UserStore, Store {
     _$itemDetailAtom.reportChanged();
   }
 
-  final _$islistEmptyAtom = Atom(name: '_UserStore.islistEmpty');
+  final _$islistEmptyAtom = Atom(name: '_UserBloc.islistEmpty');
 
   @override
   bool get islistEmpty {
@@ -41,7 +41,7 @@ mixin _$UserStore on _UserStore, Store {
     _$islistEmptyAtom.reportChanged();
   }
 
-  final _$isItemEmptyAtom = Atom(name: '_UserStore.isItemEmpty');
+  final _$isItemEmptyAtom = Atom(name: '_UserBloc.isItemEmpty');
 
   @override
   bool get isItemEmpty {
@@ -57,7 +57,7 @@ mixin _$UserStore on _UserStore, Store {
     _$isItemEmptyAtom.reportChanged();
   }
 
-  final _$userProfileAtom = Atom(name: '_UserStore.userProfile');
+  final _$userProfileAtom = Atom(name: '_UserBloc.userProfile');
 
   @override
   User get userProfile {
@@ -73,7 +73,7 @@ mixin _$UserStore on _UserStore, Store {
     _$userProfileAtom.reportChanged();
   }
 
-  final _$personAtom = Atom(name: '_UserStore.person');
+  final _$personAtom = Atom(name: '_UserBloc.person');
 
   @override
   User get person {
@@ -88,7 +88,7 @@ mixin _$UserStore on _UserStore, Store {
     _$personAtom.reportChanged();
   }
 
-  final _$isModifiedAtom = Atom(name: '_UserStore.isModified');
+  final _$isModifiedAtom = Atom(name: '_UserBloc.isModified');
 
   @override
   bool get isModified {
@@ -104,7 +104,7 @@ mixin _$UserStore on _UserStore, Store {
     _$isModifiedAtom.reportChanged();
   }
 
-  final _$userListAtom = Atom(name: '_UserStore.userList');
+  final _$userListAtom = Atom(name: '_UserBloc.userList');
 
   @override
   List<User> get userList {
@@ -119,7 +119,7 @@ mixin _$UserStore on _UserStore, Store {
     _$userListAtom.reportChanged();
   }
 
-  final _$totalUserAtom = Atom(name: '_UserStore.totalUser');
+  final _$totalUserAtom = Atom(name: '_UserBloc.totalUser');
 
   @override
   int get totalUser {
@@ -135,7 +135,7 @@ mixin _$UserStore on _UserStore, Store {
     _$totalUserAtom.reportChanged();
   }
 
-  final _$successAtom = Atom(name: '_UserStore.success');
+  final _$successAtom = Atom(name: '_UserBloc.success');
 
   @override
   bool get success {
@@ -150,7 +150,7 @@ mixin _$UserStore on _UserStore, Store {
     _$successAtom.reportChanged();
   }
 
-  final _$loadingAtom = Atom(name: '_UserStore.loading');
+  final _$loadingAtom = Atom(name: '_UserBloc.loading');
 
   @override
   bool get loading {
@@ -165,7 +165,7 @@ mixin _$UserStore on _UserStore, Store {
     _$loadingAtom.reportChanged();
   }
 
-  final _$idAtom = Atom(name: '_UserStore.id');
+  final _$idAtom = Atom(name: '_UserBloc.id');
 
   @override
   int get id {
@@ -180,7 +180,7 @@ mixin _$UserStore on _UserStore, Store {
     _$idAtom.reportChanged();
   }
 
-  final _$usernameAtom = Atom(name: '_UserStore.username');
+  final _$usernameAtom = Atom(name: '_UserBloc.username');
 
   @override
   String get username {
@@ -195,7 +195,7 @@ mixin _$UserStore on _UserStore, Store {
     _$usernameAtom.reportChanged();
   }
 
-  final _$firstnameAtom = Atom(name: '_UserStore.firstname');
+  final _$firstnameAtom = Atom(name: '_UserBloc.firstname');
 
   @override
   String get firstname {
@@ -211,7 +211,7 @@ mixin _$UserStore on _UserStore, Store {
     _$firstnameAtom.reportChanged();
   }
 
-  final _$lastnameAtom = Atom(name: '_UserStore.lastname');
+  final _$lastnameAtom = Atom(name: '_UserBloc.lastname');
 
   @override
   String get lastname {
@@ -226,7 +226,7 @@ mixin _$UserStore on _UserStore, Store {
     _$lastnameAtom.reportChanged();
   }
 
-  final _$emailAtom = Atom(name: '_UserStore.email');
+  final _$emailAtom = Atom(name: '_UserBloc.email');
 
   @override
   String get email {
@@ -241,7 +241,7 @@ mixin _$UserStore on _UserStore, Store {
     _$emailAtom.reportChanged();
   }
 
-  final _$activatedAtom = Atom(name: '_UserStore.activated');
+  final _$activatedAtom = Atom(name: '_UserBloc.activated');
 
   @override
   String get activated {
@@ -257,7 +257,7 @@ mixin _$UserStore on _UserStore, Store {
     _$activatedAtom.reportChanged();
   }
 
-  final _$profileAtom = Atom(name: '_UserStore.profile');
+  final _$profileAtom = Atom(name: '_UserBloc.profile');
 
   @override
   String get profile {
@@ -286,155 +286,155 @@ mixin _$UserStore on _UserStore, Store {
     return _$getProfileAsyncAction.run(() => super.getProfile());
   }
 
-  final _$_UserStoreActionController = ActionController(name: '_UserStore');
+  final _$_UserBlocActionController = ActionController(name: '_UserBloc');
 
   @override
   void setUserId(int value) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setUserId(value);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setUsername(String value) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setUsername(value);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setFirstname(String value) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setFirstname(value);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setLastname(String value) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setLastname(value);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setEmail(String value) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setEmail(value);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setActivated(String value) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setActivated(value);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setProfile(String value) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setProfile(value);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void count(List<User> list) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.count(list);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setItemData(User data) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setItemData(data);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic itemTapU(int position) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.itemTapU(position);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic itemTap(User data) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.itemTap(data);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic add() {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.add();
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic save() {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.save();
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic delete(String userid) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.delete(userid);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic update(int id) {
-    final _$actionInfo = _$_UserStoreActionController.startAction();
+    final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.update(id);
     } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
+      _$_UserBlocActionController.endAction(_$actionInfo);
     }
   }
 }

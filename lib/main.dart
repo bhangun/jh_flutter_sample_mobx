@@ -17,7 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'constants/strings.dart';
-import 'stores/app/app_store.dart';
+import 'bloc/app/index.dart';
 import 'views/splash.dart';
 import 'services/locator.dart';
 import 'services/routes.dart';
@@ -36,19 +36,19 @@ void main() {
 }
 
 class KutilangApp extends StatelessWidget {
-  final _appStore = AppStore();
+  final _appBloc = AppStore();
   final _appKey = GlobalKey<State>();
  
   @override
   Widget build(BuildContext context) {
     return Observer(
-      name: 'username',
+      name: 'app',
       builder: (context) {
         return MaterialApp(
-          key: _appKey,
+                key: _appKey,
                 debugShowCheckedModeBanner: false,
                 title: Strings.appName,
-                theme: _appStore.theme,
+                theme: _appBloc.theme,
                 routes: Routes.routes,
                 home: SplashScreen(),
                 navigatorKey: NavigationService.navigatorKey,

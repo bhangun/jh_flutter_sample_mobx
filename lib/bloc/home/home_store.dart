@@ -1,5 +1,5 @@
 
-import '../../stores/error/error_store.dart';
+import '../../bloc/error/index.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_store.g.dart';

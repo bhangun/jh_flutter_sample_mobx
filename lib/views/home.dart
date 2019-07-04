@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jh_flutter_mobx/stores/app/app_store.dart';
-import 'package:jh_flutter_mobx/widgets/rounded_button_widget.dart';
-import '../modules/account/stores/authentication/authentication_store.dart';
-import '../modules/account/stores/user/user_store.dart';
+import 'package:jh_flutter_mobx/bloc/error/index.dart';
+import '../bloc/app/index.dart';
+import '../widgets/rounded_button_widget.dart';
+import '../modules/account/bloc/authentication/index.dart';
+import '../modules/account/bloc/user/index.dart';
 import '../widgets/appbar_widget.dart';
 import '../widgets/drawer_widget.dart';
 import '../widgets/global_methods.dart';
@@ -17,10 +18,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _homeKey = GlobalKey<ScaffoldState>();
   //store
-  final AuthenticationStore __authStore = AuthenticationStore();
-  final UserStore _userStore = UserStore();
+  final AuthenticationStore _authBloc = AuthenticationStore();
+  final UserStore _userBloc = UserStore();
   //final _homeStore = HomeStore();
-  final _appStore = AppStore();
+  final _appBloc = AppStore();
+  final _errorBloc = ErrorStore();
 
 
 
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     //get profile
-     _userStore.getProfile();
+     _userBloc.getProfile();
   }
 
   @override
@@ -41,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer:  Observer(
           builder: (context) {
             return CommonDrawer(
-        accountName: _userStore.userProfile.firstName, 
-        accountEmail: _userStore.userProfile.email );
+        accountName: _userBloc.userProfile.firstName, 
+        accountEmail: _userBloc.userProfile.email );
       })
     );
   }
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Observer(
           name: 'body',
           builder: (context) {
-            return __authStore.loggedIn
+            return _authBloc.loggedIn
                 ? CustomProgressIndicatorWidget()
                 : Material(child: SafeArea(
                 child: ListView(
@@ -63,13 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 buttonText: 'Light',
                 buttonColor:  Theme.of(context).buttonColor,
                 textColor: Theme.of(context).textTheme.button.color,
-                onPressed: () => _appStore.switchToLight()
+                onPressed: () => _appBloc.switchToLight()
               ),
               RoundedButtonWidget(
                 buttonText: 'Dark',
                 buttonColor:  Theme.of(context).buttonColor,
                 textColor: Theme.of(context).textTheme.button.color,   
-                onPressed: ()=>_appStore.switchToDark()
+                onPressed: ()=>_appBloc.switchToDark()
               ),
                 ]
                 )
@@ -79,9 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Observer(
           name: 'error',
           builder: (context) {
-            return __authStore.success
+            return _authBloc.success
                 ? Container()
-                : showErrorMessage(context, __authStore.errorStore.errorMessage);
+                : showErrorMessage(context, _errorBloc.errorMessage);
           },
         )
       ],

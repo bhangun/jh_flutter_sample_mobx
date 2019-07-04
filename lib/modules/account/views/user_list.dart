@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jh_flutter_mobx/widgets/alert_widget.dart';
-import 'package:jh_flutter_mobx/widgets/appbar_widget.dart';
-import '../stores/user/user_store.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import '../../../bloc/error/index.dart';
+import '../../../widgets/alert_widget.dart';
+import '../../../widgets/appbar_widget.dart';
+import '../bloc/user/index.dart';
 import '../../../widgets/global_methods.dart';
 import '../../../widgets/progress_indicator_widget.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+
 
 class UserList extends StatefulWidget {
   final String title;
@@ -17,12 +19,13 @@ class UserList extends StatefulWidget {
 
 class _UserListState extends State<UserList> {
   final _listKey = GlobalKey<ScaffoldState>();
-  final _userStore = UserStore();
+  final _userBloc = UserStore();
+  final _errorBloc = ErrorStore();
 
   @override
   void initState() {
     super.initState();
-    _getUserList();
+    _userBloc.getUserList();
   }
 
   @override
@@ -30,11 +33,11 @@ class _UserListState extends State<UserList> {
     return 
      Scaffold(
        key: _listKey,
-          // cannot be used using this form $_userStore.totalUser
-          appBar: buildAppBar(context, 'User List ( ${_userStore.totalUser} )'),
+          // cannot be used using this form $_userBloc.totalUser
+          appBar: buildAppBar(context, 'User List ( ${_userBloc.totalUser} )'),
           body: _buildBody(),
           floatingActionButton: FloatingActionButton(
-            onPressed: _userStore.add,
+            onPressed: _userBloc.add,
             tooltip: 'Add',
             child: Icon(Icons.add),
           )
@@ -47,7 +50,7 @@ class _UserListState extends State<UserList> {
         Observer(
           name: 'list',
           builder: (context) {
-            return _userStore.loading
+            return _userBloc.loading
                 ? CustomProgressIndicatorWidget()
                 : Material(child: _buildSlidelist());
           },
@@ -55,24 +58,24 @@ class _UserListState extends State<UserList> {
         Observer(
           name: 'error',
           builder: (context) {
-            return _userStore.success
+            return _userBloc.success
                 ? Container()
-                : showErrorMessage(context, _userStore.errorStore.errorMessage);
+                : showErrorMessage(context, _errorBloc.errorMessage);
           },
         ),
         Observer(
           name: 'dialog',
           builder: (context) {
-            return _userStore.isModified ? KutAlert():Container();
+            return _userBloc.isModified ? KutAlert():Container();
         }),
       ],
     );
   }
 
   _buildSlidelist(){
-    return !_userStore.islistEmpty? 
+    return !_userBloc.islistEmpty? 
           ListView.separated(
-            itemCount: _userStore.userList.length,
+            itemCount: _userBloc.userList.length,
             separatorBuilder: (context, index) {
               return Divider();
             },
@@ -102,7 +105,7 @@ class _UserListState extends State<UserList> {
                       caption: 'Delete',
                       color: Colors.red,
                       icon: Icons.delete,
-                      onTap: ()=> _userStore.delete(_userStore.userList[index].login),
+                      onTap: ()=> _userBloc.delete(_userBloc.userList[index].login),
                     ),
                   ],
                   dismissal: SlidableDismissal(
@@ -111,19 +114,19 @@ class _UserListState extends State<UserList> {
                   child: ListTile(
                 leading: Icon(Icons.person),
                 title: Text(
-                  '${_userStore.userList[index].login}',
+                  '${_userBloc.userList[index].login}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   style: Theme.of(context).textTheme.title,
                 ),
                 subtitle: Text(
-                  '${_userStore.userList[index].email}',
+                  '${_userBloc.userList[index].email}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                 ),
-                 onTap: (){_userStore.itemTapU(index);}
+                 onTap: (){_userBloc.itemTapU(index);}
               ),
                 );
             }
@@ -132,9 +135,9 @@ class _UserListState extends State<UserList> {
 
 
   _buildListView() {
-    return !_userStore.islistEmpty
+    return !_userBloc.islistEmpty
         ? ListView.separated(
-            itemCount: _userStore.userList.length,
+            itemCount: _userBloc.userList.length,
             separatorBuilder: (context, position) {
               return Divider();
             },
@@ -142,27 +145,23 @@ class _UserListState extends State<UserList> {
               return ListTile(
                 leading: Icon(Icons.person),
                 title: Text(
-                  '${_userStore.userList[position].firstName}',
+                  '${_userBloc.userList[position].firstName}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   style: Theme.of(context).textTheme.title,
                 ),
                 subtitle: Text(
-                  '${_userStore.userList[position].email}',
+                  '${_userBloc.userList[position].email}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                 ),
-                 onTap: ()=>_userStore.itemTapU(position)
+                 onTap: ()=>_userBloc.itemTapU(position)
               );
             },
           )
         : Center(child: Text('No posts found'));
-  }
-
-  _getUserList(){
-    _userStore.getUserList();
   }
 
 }

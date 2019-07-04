@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../modules/account/stores/authentication/authentication_store.dart';
-import '../stores/app/app_store.dart';
+import '../modules/account/bloc/authentication/index.dart';
+import '../bloc/app/index.dart';
 import '../constants/strings.dart';
 import '../widgets/app_icon_widget.dart';
 import '../widgets/empty_app_bar_widget.dart';
@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //store
   final _authStore = AuthenticationStore();
 
-  final _appStore = AppStore();
+  final _appBloc = AppStore();
 
   @override
   void initState() {
@@ -134,18 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
               _buildUserIdField(),
               _buildPasswordField(),
               _buildForgotPasswordButton(),
-              RoundedButtonWidget(
-                buttonText: 'Light',
-                buttonColor:  Theme.of(context).buttonColor,
-                textColor: Theme.of(context).textTheme.button.color,
-                onPressed: ()=>_appStore.switchToLight()
-              ),
-              RoundedButtonWidget(
-                buttonText: 'Dark',
-                buttonColor:  Theme.of(context).buttonColor,
-                textColor: Theme.of(context).textTheme.button.color,
-                onPressed: ()=>_appStore.switchToDark()
-              ),
               _buildSignInButton(),
             ],
           ),
@@ -220,8 +208,8 @@ class _LoginScreenState extends State<LoginScreen> {
       textColor: Theme.of(context).textTheme.button.color,
       onPressed: () {
         if (_authStore.canLogin) {
-          print('login  ${_appStore.isLightTheme}');
-          _appStore.switchToDark();
+          print('login  ${_appBloc.isLightTheme}');
+          _appBloc.switchToDark();
           _authStore.login(_userEmailController.text,_passwordController.text);
         } else {
           showErrorMessage(context , 'Please fill in all fields');

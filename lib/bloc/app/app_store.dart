@@ -6,14 +6,14 @@ import '../../themes/index.dart';
 
 part 'app_store.g.dart';
 
-class AppStore = _AppStore with _$AppStore;
+class AppStore = _AppBloc with _$AppStore;
 
-abstract class _AppStore implements Store {
+abstract class _AppBloc implements Store {
 
   //final mm = locator<ThemeService>();
   final mm = ThemeService();
 
-  _AppStore(){
+  _AppBloc(){
      reaction((_) => isLightTheme,count);
   }
 

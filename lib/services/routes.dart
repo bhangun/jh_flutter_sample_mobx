@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../modules/account/views/user.detail.dart';
-import '../modules/account/views/user.form.dart';
-import '../modules/account/views/user.list.dart';
+import '../modules/account/views/user_detail.dart';
+import '../modules/account/views/user_form.dart';
+import '../modules/account/views/user_list.dart';
 import '../views/home.dart';
 import '../views/login.dart';
 import '../views/splash.dart';

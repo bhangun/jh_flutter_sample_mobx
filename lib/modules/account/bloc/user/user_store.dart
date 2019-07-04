@@ -5,27 +5,27 @@ import 'package:mobx/mobx.dart';
 import '../../../../services/locator.dart';
 import '../../../../services/navigation.dart';
 import '../../../../services/routes.dart';
-import '../../../../stores/alert/alert_store.dart';
+import '../../../../bloc/alert/index.dart';
 import '../../../../modules/account/models/user_model.dart';
 import '../../../../services/helper.dart';
 import '../../../../services/network/connection.dart';
 import '../../helper/account_helper.dart';
-import '../../../../stores/error/error_store.dart';
+import '../../../../bloc/error/index.dart';
 
 part 'user_store.g.dart';
 
-class UserStore = _UserStore with _$UserStore;
+class UserStore = _UserBloc with _$UserStore;
 
-abstract class _UserStore implements Store {
+abstract class _UserBloc implements Store {
 
-  _UserStore(){
+  _UserBloc(){
     reaction((_) => userList,count);
     reaction((_) => itemDetail,setItemData);
   }
 
   // other store  
-  final ErrorStore errorStore = ErrorStore();
-  final AlertStore alertStore = AlertStore();
+  final ErrorStore _errorBloc = ErrorStore();
+  final AlertStore _alertStore = AlertStore();
 
 
   // store variables:-----------------------------------------------------------
@@ -121,10 +121,10 @@ abstract class _UserStore implements Store {
     if(list != null ){
       totalUser =  list.length;
       islistEmpty = false;
-      errorStore.showError = false;
+      _errorBloc.showError = false;
     } else {
-      errorStore.showError = true;
-      errorStore.errorMessage = 'Data Empty';
+      _errorBloc.showError = true;
+      _errorBloc.errorMessage = 'Data Empty';
     }
   }
 
@@ -197,14 +197,14 @@ abstract class _UserStore implements Store {
 
 
   dialogDelete([String item]){
-    alertStore.setTitleDialog('Delete');
-    alertStore.setContentDialog('This item $item would be delete');
+    _alertStore.setTitleDialog('Delete');
+    _alertStore.setContentDialog('This item $item would be delete');
     print('----');
   }
 
    dialogUpdate([String item]){
-    alertStore.setTitleDialog('Update');
-    alertStore.setContentDialog('This item $item would be update');
+    _alertStore.setTitleDialog('Update');
+    _alertStore.setContentDialog('This item $item would be update');
   }
 
   mapping(){

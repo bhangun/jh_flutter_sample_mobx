@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../constants/endpoints.dart';
-import '../../services/sharedpref/constants/preferences.dart';
+import '../../services/sharedpref/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Dio dio = new Dio()
