@@ -4,11 +4,11 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../services/config.dart';
-import '../../../../services/helper.dart';
-import '../../../../services/locator.dart';
-import '../../../../services/navigation.dart';
+import '../../../../utils/helper.dart';
+import '../../../../utils/locator.dart';
+import '../../../../utils/navigation.dart';
 import '../../../../services/network/connection.dart';
-import '../../../../services/routes.dart';
+import '../../../../utils/routes.dart';
 import '../../../../services/sharedpref/preferences.dart';
 import '../../../../bloc/error/index.dart';
 import '../user/index.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jh_flutter_mobx/services/locator.dart';
+import 'package:jh_flutter_mobx/utils/locator.dart';
 import 'package:jh_flutter_mobx/themes/theme_service.dart';
 import 'package:mobx/mobx.dart';
 import '../../themes/index.dart';
@@ -28,18 +28,18 @@ abstract class _AppBloc implements Store {
 
  @action
   void count(bool b){
-print('>>>>>>>>>>>>>>>>$b');
+    // print('>>>>>>>>>>>>>>>>$b');
   }
 
   @action
   switchToDark(){
     isLightTheme = true;
-    print('$theme Light $isLightTheme');
+    // print('$theme Light $isLightTheme');
   }
 
   @action
   switchToLight(){
     isLightTheme = true;
-    print('$wtheme Light $isLightTheme');
+    // print('$wtheme Light $isLightTheme');
   }
 }

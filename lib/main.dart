@@ -19,9 +19,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'constants/strings.dart';
 import 'bloc/app/index.dart';
 import 'views/splash.dart';
-import 'services/locator.dart';
-import 'services/routes.dart';
-import 'services/navigation.dart';
+import 'utils/locator.dart';
+import 'utils/routes.dart';
+import 'utils/navigation.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import '../../../services/config.dart';
-import '../../../services/helper.dart';
+import '../../../utils/helper.dart';
 
 import '../models/user_model.dart';
 import '../../../services/network/connection.dart';

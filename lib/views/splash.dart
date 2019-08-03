@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/strings.dart';
-import '../services/routes.dart';
+import '../utils/routes.dart';
 import '../services/sharedpref/preferences.dart';
 import '../widgets/app_icon_widget.dart';
 

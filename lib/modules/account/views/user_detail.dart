@@ -15,15 +15,15 @@ class _UserDetailState extends State<UserDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context, 'User Detail '),//${_userBloc.itemDetail.firstName}'),
-        body:  Observer(
+        appBar: buildAppBar(context, 'User Detail >>${_userBloc.isItemEmpty}'),//${_userBloc.itemDetail.firstName}'),
+        body:  /* Observer(
           name: 'userdetail',
           builder: (context) {
-            return _userBloc.isItemEmpty?
-            Center(child: Text('User data are empty >> ${_userBloc.userList}')):
-             userDetail();
+            return  */_userBloc.isItemEmpty?
+            Center(child: Text('User data are empty >> ${_userBloc.position}')):
+             userDetail(context)/* ;
             }
-        ),
+        ) */,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             /* Navigator.push(
@@ -36,10 +36,13 @@ class _UserDetailState extends State<UserDetail> {
         ));
   }
 
-  userDetail() {
+  userDetail(BuildContext context) {
 
     //print(_userBloc.itemDetail.email);
-    return 
+    return Observer(
+          name: 'userdetail',
+          builder: (context) {
+            return 
     ListView(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         children: <Widget>[
@@ -56,5 +59,6 @@ class _UserDetailState extends State<UserDetail> {
                 Text(_userBloc.itemDetail.createdDate.toString()),
               ])
         ]);
+          });
   }
 }

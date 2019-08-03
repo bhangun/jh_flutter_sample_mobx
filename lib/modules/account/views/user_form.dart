@@ -75,7 +75,7 @@ class _UserFormState extends State<UserForm> {
         ),
         body: _buildBody(),
         floatingActionButton: FloatingActionButton(
-          onPressed: ()=> _userBloc.save,
+          onPressed: ()=> _userBloc.save(),
           tooltip: 'Add',
           child: Icon(Icons.save),
         ));
@@ -153,8 +153,9 @@ class _UserFormState extends State<UserForm> {
           value: _activated,
           onChanged: (bool newValue) =>_userBloc.setActivated(_email.text)
       ),
-      RaisedButton(
+      FlatButton(
           child: Text('Profile'),
+
           onPressed: () {}
       ),
     ];

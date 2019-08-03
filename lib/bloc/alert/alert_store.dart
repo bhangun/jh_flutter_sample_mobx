@@ -1,5 +1,5 @@
-import 'package:jh_flutter_mobx/services/locator.dart';
-import 'package:jh_flutter_mobx/services/navigation.dart';
+import 'package:jh_flutter_mobx/utils/locator.dart';
+import 'package:jh_flutter_mobx/utils/navigation.dart';
 import 'package:mobx/mobx.dart';
 
 part 'alert_store.g.dart';

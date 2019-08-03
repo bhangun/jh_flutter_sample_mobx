@@ -9,6 +9,12 @@ part of 'user_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars
 
 mixin _$UserStore on _UserBloc, Store {
+  Computed<User> _$userDetailComputed;
+
+  @override
+  User get userDetail =>
+      (_$userDetailComputed ??= Computed<User>(() => super.userDetail)).value;
+
   final _$itemDetailAtom = Atom(name: '_UserBloc.itemDetail');
 
   @override
@@ -272,6 +278,21 @@ mixin _$UserStore on _UserBloc, Store {
     _$profileAtom.reportChanged();
   }
 
+  final _$positionAtom = Atom(name: '_UserBloc.position');
+
+  @override
+  int get position {
+    _$positionAtom.reportObserved();
+    return super.position;
+  }
+
+  @override
+  set position(int value) {
+    _$positionAtom.context.checkIfStateModificationsAreAllowed(_$positionAtom);
+    super.position = value;
+    _$positionAtom.reportChanged();
+  }
+
   final _$getUserListAsyncAction = AsyncAction('getUserList');
 
   @override
@@ -369,7 +390,7 @@ mixin _$UserStore on _UserBloc, Store {
   }
 
   @override
-  dynamic setItemData(User data) {
+  dynamic setItemData(int data) {
     final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
       return super.setItemData(data);
@@ -379,10 +400,10 @@ mixin _$UserStore on _UserBloc, Store {
   }
 
   @override
-  dynamic itemTapU(int position) {
+  dynamic itemTapU(int _position) {
     final _$actionInfo = _$_UserBlocActionController.startAction();
     try {
-      return super.itemTapU(position);
+      return super.itemTapU(_position);
     } finally {
       _$_UserBlocActionController.endAction(_$actionInfo);
     }

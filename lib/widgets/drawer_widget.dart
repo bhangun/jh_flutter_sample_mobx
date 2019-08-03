@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/routes.dart';
+import '../utils/routes.dart';
 
 class CommonDrawer extends StatelessWidget {
   final String accountName;

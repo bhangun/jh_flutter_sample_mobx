@@ -2,12 +2,12 @@
 import 'dart:convert';
 import 'package:mobx/mobx.dart';
 
-import '../../../../services/locator.dart';
-import '../../../../services/navigation.dart';
-import '../../../../services/routes.dart';
+import '../../../../utils/locator.dart';
+import '../../../../utils/navigation.dart';
+import '../../../../utils/routes.dart';
 import '../../../../bloc/alert/index.dart';
 import '../../../../modules/account/models/user_model.dart';
-import '../../../../services/helper.dart';
+import '../../../../utils/helper.dart';
 import '../../../../services/network/connection.dart';
 import '../../helper/account_helper.dart';
 import '../../../../bloc/error/index.dart';
@@ -20,7 +20,7 @@ abstract class _UserBloc implements Store {
 
   _UserBloc(){
     reaction((_) => userList,count);
-    reaction((_) => itemDetail,setItemData);
+    reaction((_) => position,setItemData);
   }
 
   // other store  
@@ -128,23 +128,32 @@ abstract class _UserBloc implements Store {
     }
   }
 
+  @computed
+  User get userDetail => itemDetail;
+
   @action
-  setItemData(User data ){
-  
+  setItemData(int data){
+    isItemEmpty = false;
+    itemDetail = userList[data];
+    //userDetail = data;
+    print('$isItemEmpty  ????>>>${userDetail.email}');
   }
+@observable
+  int position=0;
 
   @action
-  itemTapU(int position){
-     print(position);
-      itemDetail = userList[position];
+  itemTapU(int _position){
+    try{
+   position = _position;
+    itemDetail = userList[position];
+    isItemEmpty = false;
+  
+    }catch(e){}
+   // setItemData(userList[position]);
+    //if(itemDetail != null)
+      //isItemEmpty = false;
 
-     if(itemDetail!=null){
-      isItemEmpty = false;
-        
-        print('>>>>>>>>   >>>>>>>>data>>>>>> $isItemEmpty >>>>>>>> $itemDetail');
-       print(isItemEmpty);
-     }
-     locator<NavigationService>().navigateTo(Routes.userDetail);
+    locator<NavigationService>().navigateTo(Routes.userDetail);
   }
 
   @action
@@ -160,16 +169,15 @@ abstract class _UserBloc implements Store {
   }
 
   @action
-  save(){
+  save(){ print('----------------save');
     isModified =false;
     createUser(mapping());
     //dialogDelete();
-    locator<NavigationService>().navigateTo(Routes.userForm);
+    locator<NavigationService>().navigateTo(Routes.userList);
   }
 
   @action
   delete(String userid){
-    print('delete---$id');
     dialogDelete();
     //isModified =true;
     deleteUser(userid);
@@ -184,7 +192,6 @@ abstract class _UserBloc implements Store {
   @action
   Future getUserList() async{ 
     users().then((data)=> userList = data); 
-    totalUser = userList != null ? userList.length:0;
   }
 
   @action

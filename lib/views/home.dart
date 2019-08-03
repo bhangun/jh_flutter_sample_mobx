@@ -45,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return CommonDrawer(
         accountName: _userBloc.userProfile.firstName, 
         accountEmail: _userBloc.userProfile.email );
-      })
+      }),
+      bottomNavigationBar: BottomAppBar(child: Text('kkk'),),
     );
   }
 
@@ -89,6 +90,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
-
-
 }

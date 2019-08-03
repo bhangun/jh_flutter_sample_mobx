@@ -30,21 +30,24 @@ class _UserListState extends State<UserList> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-     Scaffold(
-       key: _listKey,
-          // cannot be used using this form $_userBloc.totalUser
-          appBar: buildAppBar(context, 'User List ( ${_userBloc.totalUser} )'),
-          body: _buildBody(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: _userBloc.add,
-            tooltip: 'Add',
-            child: Icon(Icons.add),
-          )
-      );
+    return Observer(
+          name: 'scaffold',
+          builder: (context) {
+            return Scaffold(
+                    key: _listKey,
+                        // cannot be used using this form $_userBloc.totalUser
+                        appBar: buildAppBar(context, 'User List ( ${_userBloc.totalUser} )'),
+                        body: _buildBody(context),
+                        floatingActionButton: FloatingActionButton(
+                          onPressed: _userBloc.add,
+                          tooltip: 'Add',
+                          child: Icon(Icons.add),
+                        )
+            );
+    });
   }
 
-  _buildBody() {
+  _buildBody(BuildContext context) {
     return Stack(
       children: <Widget>[
         Observer(
@@ -52,7 +55,7 @@ class _UserListState extends State<UserList> {
           builder: (context) {
             return _userBloc.loading
                 ? CustomProgressIndicatorWidget()
-                : Material(child: _buildSlidelist());
+                : Material(child: _buildSlidelist(context));
           },
         ),
         Observer(
@@ -72,9 +75,12 @@ class _UserListState extends State<UserList> {
     );
   }
 
-  _buildSlidelist(){
+  _buildSlidelist(BuildContext context){
     return !_userBloc.islistEmpty? 
-          ListView.separated(
+          Observer(
+          name: 'userList',
+          builder: (context) {
+            return ListView.separated(
             itemCount: _userBloc.userList.length,
             separatorBuilder: (context, index) {
               return Divider();
@@ -121,48 +127,17 @@ class _UserListState extends State<UserList> {
                   style: Theme.of(context).textTheme.title,
                 ),
                 subtitle: Text(
-                  '${_userBloc.userList[index].email}',
+                  '${_userBloc.userList[index].email } ',// ${_userBloc.itemDetail.email}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                 ),
-                 onTap: (){_userBloc.itemTapU(index);}
+                 onTap: ()=>_userBloc.itemTapU(index)
               ),
                 );
             }
-          ): Center(child: Text('Data empty'));
+          );
+          }): Center(child: Text('Data empty'));
   }
-
-
-  _buildListView() {
-    return !_userBloc.islistEmpty
-        ? ListView.separated(
-            itemCount: _userBloc.userList.length,
-            separatorBuilder: (context, position) {
-              return Divider();
-            },
-            itemBuilder: (context, position) {
-              return ListTile(
-                leading: Icon(Icons.person),
-                title: Text(
-                  '${_userBloc.userList[position].firstName}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  style: Theme.of(context).textTheme.title,
-                ),
-                subtitle: Text(
-                  '${_userBloc.userList[position].email}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                ),
-                 onTap: ()=>_userBloc.itemTapU(position)
-              );
-            },
-          )
-        : Center(child: Text('No posts found'));
-  }
-
 }
 

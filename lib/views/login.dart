@@ -208,8 +208,6 @@ class _LoginScreenState extends State<LoginScreen> {
       textColor: Theme.of(context).textTheme.button.color,
       onPressed: () {
         if (_authStore.canLogin) {
-          print('login  ${_appBloc.isLightTheme}');
-          _appBloc.switchToDark();
           _authStore.login(_userEmailController.text,_passwordController.text);
         } else {
           showErrorMessage(context , 'Please fill in all fields');
