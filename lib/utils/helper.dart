@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:corsac_jwt/corsac_jwt.dart';
-import '../services/config.dart';
+import 'config.dart';
 
 //
 setPrefs(String key,String value) {

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import '../../../bloc/error/index.dart';
 import '../../../widgets/alert_widget.dart';
 import '../../../widgets/appbar_widget.dart';
-import '../bloc/user/index.dart';
+import '../bloc/user_bloc.dart';
 import '../../../widgets/global_methods.dart';
 import '../../../widgets/progress_indicator_widget.dart';
 
@@ -20,7 +19,6 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList> {
   final _listKey = GlobalKey<ScaffoldState>();
   final _userBloc = UserStore();
-  final _errorBloc = ErrorStore();
 
   @override
   void initState() {
@@ -31,7 +29,7 @@ class _UserListState extends State<UserList> {
   @override
   Widget build(BuildContext context) {
     return Observer(
-          name: 'scaffold',
+          key: Key('scaffold'),
           builder: (context) {
             return Scaffold(
                     key: _listKey,
@@ -51,7 +49,7 @@ class _UserListState extends State<UserList> {
     return Stack(
       children: <Widget>[
         Observer(
-          name: 'list',
+          key: Key( 'list'),
           builder: (context) {
             return _userBloc.loading
                 ? CustomProgressIndicatorWidget()
@@ -59,15 +57,15 @@ class _UserListState extends State<UserList> {
           },
         ),
         Observer(
-          name: 'error',
+          key: Key( 'error'),
           builder: (context) {
             return _userBloc.success
                 ? Container()
-                : showErrorMessage(context, _errorBloc.errorMessage);
+                : showErrorMessage(context, _userBloc.errorMessage);
           },
         ),
         Observer(
-          name: 'dialog',
+          key: Key('dialog'),
           builder: (context) {
             return _userBloc.isModified ? KutAlert():Container();
         }),
@@ -78,7 +76,7 @@ class _UserListState extends State<UserList> {
   _buildSlidelist(BuildContext context){
     return !_userBloc.islistEmpty? 
           Observer(
-          name: 'userList',
+          key: Key( 'userList'),
           builder: (context) {
             return ListView.separated(
             itemCount: _userBloc.userList.length,

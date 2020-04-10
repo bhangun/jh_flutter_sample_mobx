@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../../../bloc/error/index.dart';
 
 import '../../../widgets/alert_widget.dart';
-import '../bloc/user/index.dart';
+import '../bloc/user_bloc.dart';
 import '../../../widgets/global_methods.dart';
 import '../../../widgets/progress_indicator_widget.dart';
 import '../models/user_model.dart';
@@ -25,7 +24,6 @@ class _UserFormState extends State<UserForm> {
   final _email = TextEditingController();
 
   final _userBloc = UserStore();
-  final _errorBloc = ErrorStore();
 
 @override
   void initState() {
@@ -85,7 +83,7 @@ class _UserFormState extends State<UserForm> {
     return Stack(
       children: <Widget>[
         Observer(
-          name: 'form',
+          key: Key( 'form'),
           builder: (context) {
             return _userBloc.loading
                 ? CustomProgressIndicatorWidget()
@@ -93,15 +91,15 @@ class _UserFormState extends State<UserForm> {
           },
         ),
         Observer(
-          name: 'error',
+          key: Key( 'error'),
           builder: (context) {
             return _userBloc.success
                 ? Container()
-                : showErrorMessage(context, _errorBloc.errorMessage);
+                : showErrorMessage(context, _userBloc.errorMessage);
           },
         ),
         Observer(
-          name: 'dialog',
+          key: Key('dialog'),
           builder: (context) {
             return _userBloc.isModified ? KutAlert():Container();
           }

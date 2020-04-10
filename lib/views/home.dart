@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jh_flutter_mobx/bloc/error/index.dart';
-import '../bloc/app/index.dart';
+import 'package:jh_flutter_mobx/bloc/app/app_bloc.dart';
+import 'package:jh_flutter_mobx/bloc/authentication/authentication_bloc.dart';
+import 'package:jh_flutter_mobx/modules/account/bloc/user_bloc.dart';
+
 import '../widgets/rounded_button_widget.dart';
-import '../modules/account/bloc/authentication/index.dart';
-import '../modules/account/bloc/user/index.dart';
+
 import '../widgets/appbar_widget.dart';
 import '../widgets/drawer_widget.dart';
 import '../widgets/global_methods.dart';
@@ -19,19 +20,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final _homeKey = GlobalKey<ScaffoldState>();
   //store
   final AuthenticationStore _authBloc = AuthenticationStore();
-  final UserStore _userBloc = UserStore();
+ 
   //final _homeStore = HomeStore();
   final _appBloc = AppStore();
-  final _errorBloc = ErrorStore();
-
 
 
   @override
   void initState() {
     super.initState();
-
-    //get profile
-     _userBloc.getProfile();
   }
 
   @override
@@ -40,12 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
       key: _homeKey,
       appBar: buildAppBar(context,'Home'),
       body: _buildBody(),
-      drawer:  Observer(
-          builder: (context) {
-            return CommonDrawer(
-        accountName: _userBloc.userProfile.firstName, 
-        accountEmail: _userBloc.userProfile.email );
-      }),
+      drawer:  
+             CommonDrawer(),
       bottomNavigationBar: BottomAppBar(child: Text('kkk'),),
     );
   }
@@ -54,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Stack(
       children: <Widget>[
         Observer(
-          name: 'body',
+          key: Key('body'),
           builder: (context) {
             return _authBloc.loggedIn
                 ? CustomProgressIndicatorWidget()
@@ -80,11 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         Observer(
-          name: 'error',
+          // key: Key('error'),
           builder: (context) {
             return _authBloc.success
                 ? Container()
-                : showErrorMessage(context, _errorBloc.errorMessage);
+                : showErrorMessage(context, _appBloc.errorMessage);
           },
         )
       ],

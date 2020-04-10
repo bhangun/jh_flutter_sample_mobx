@@ -1,3 +1,7 @@
 build
 pubspec.lock
 .history
+.flutter-plugins
+-flutter-plugin-dependencies
+.metadata
+.packages

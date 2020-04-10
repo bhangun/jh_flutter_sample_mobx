@@ -16,21 +16,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'constants/strings.dart';
-import 'bloc/app/index.dart';
+import 'bloc/app/app_bloc.dart';
+import 'generated/i18n.dart';
+import 'services/getIt.dart';
+import 'services/navigation.dart';
+import 'utils/modules_registry.dart';
+import 'utils/preferences.dart';
 import 'views/splash.dart';
-import 'utils/locator.dart';
 import 'utils/routes.dart';
-import 'utils/navigation.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeRight,
     DeviceOrientation.landscapeLeft,
   ]).then((_) {
-    setupLocator();
+    ModulesRegistry();
     runApp(KutilangApp());
   });
 }
@@ -42,16 +45,21 @@ class KutilangApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(
-      name: 'app',
+      key: Key('app'),
       builder: (context) {
         return MaterialApp(
-                key: _appKey,
-                debugShowCheckedModeBanner: false,
-                title: Strings.appName,
-                theme: _appBloc.theme,
-                routes: Routes.routes,
-                home: SplashScreen(),
-                navigatorKey: NavigationService.navigatorKey,
+            locale: Locale(_appBloc.locale, ""),
+            localizationsDelegates: [S.delegate],
+            supportedLocales: S.delegate.supportedLocales,
+            localeResolutionCallback:
+            S.delegate.resolution(fallback: new Locale(Preferences.english, "")),
+            key: _appKey,
+            debugShowCheckedModeBanner: false,
+            title: Preferences.appName,
+            // theme: _appBloc.theme,
+            // routes: getIt<Routes>().routes,
+            home: SplashScreen(),
+            navigatorKey: NavigationServices.navigatorKey
         );
         }
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:jh_flutter_mobx/widgets/appbar_widget.dart';
-import '../bloc/user/index.dart';
+import '../bloc/user_bloc.dart';
 
 class UserDetail extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _UserDetailState extends State<UserDetail> {
 
     //print(_userBloc.itemDetail.email);
     return Observer(
-          name: 'userdetail',
+          key: Key('userdetail'),
           builder: (context) {
             return 
     ListView(

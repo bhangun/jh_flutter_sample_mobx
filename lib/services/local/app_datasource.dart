@@ -1,6 +1,6 @@
+import 'package:jh_flutter_mobx/utils/db_constants.dart';
 import 'package:sembast/sembast.dart';
 import '../../models/app_data.dart';
-import '../../constants/db_constants.dart';
 import 'app_database.dart';
 
 
